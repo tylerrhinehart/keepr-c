@@ -39,7 +39,6 @@ namespace keepr
 
         private void ConfigureAuthentication(IServiceCollection services)
         {
-            services.Configure<JWTSettings>(Configuration.GetSection("JWTSettings"));
             services.AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<KeeprContext>().AddDefaultTokenProviders();
             services.ConfigureApplicationCookie(o =>
             {
@@ -49,30 +48,11 @@ namespace keepr
 
             services.AddAuthorization();
 
-            var secretKey = Configuration.GetSection("JWTSettings:SecretKey").Value;
-            var iss = Configuration.GetSection("JWTSettings:Issuer").Value;
-            var aud = Configuration.GetSection("JWTSettings:Audience").Value;
-
-            var signingKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(secretKey));
-            var tokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuerSigningKey = true,
-                IssuerSigningKey = signingKey,
-                ValidateIssuer = true,
-                ValidIssuer = iss,
-                ValidateAudience = true,
-                ValidAudience = aud,
-            };
-
-            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(o =>
                 {
                     o.LoginPath = "/account/login";
                     o.LogoutPath = "/account/logout";
-                })
-                .AddJwtBearer(options =>
-                {
-                    options.TokenValidationParameters = tokenValidationParameters;
                 });
 
             services.ConfigureApplicationCookie(options =>
