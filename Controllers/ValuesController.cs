@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace keepr.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
@@ -27,6 +26,7 @@ namespace keepr.Controllers
         }
 
         // POST api/values
+        [Authorize]
         [HttpPost]
         public void Post([FromBody]string value)
         {

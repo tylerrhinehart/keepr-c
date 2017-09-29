@@ -43,6 +43,7 @@ namespace keepr
                     .AllowCredentials();
                 });
             });
+            services.AddSession();
             ConfigureAuthentication(services);
             services.AddEntityFrameworkSqlServer().AddDbContext<KeeprContext>();
             services.AddMvc();
@@ -87,6 +88,7 @@ namespace keepr
                 app.UseDeveloperExceptionPage();
             }
             app.UseCors("CorsPolicy");
+            app.UseSession();
             app.UseAuthentication();
 
             app.UseDefaultFiles();

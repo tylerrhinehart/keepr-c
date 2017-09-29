@@ -8,6 +8,7 @@ using System;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Cors;
+using System.Text;
 
 namespace keepr.Controllers
 {
@@ -33,6 +34,7 @@ namespace keepr.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    HttpContext.Session.Set("uid", Encoding.ASCII.GetBytes(user.Id));
                     return new JsonResult(new Dictionary<string, object>
                     {
                         { "id", user.Id },
@@ -55,6 +57,7 @@ namespace keepr.Controllers
                 if (result.Succeeded)
                 {
                     var user = await _userManager.FindByEmailAsync(credentials.Email);
+                    HttpContext.Session.Set("uid", Encoding.ASCII.GetBytes(user.Id));
                     return new JsonResult(new Dictionary<string, object>
                     {
                         { "id", user.Id },
@@ -73,7 +76,18 @@ namespace keepr.Controllers
         public async Task<string> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            HttpContext.Session.Clear();
             return "Successfully Logged out";
+        }
+
+        [HttpGet]
+        public async Task<User> GetAuth()
+        {
+            var user = HttpContext.User;
+            byte[] byteId;
+            HttpContext.Session.TryGetValue("uid", out byteId);
+            var id = System.Text.Encoding.UTF8.GetString(byteId);
+            return await _userManager.FindByIdAsync(id);
         }
 
         private JsonResult Errors(IdentityResult result)

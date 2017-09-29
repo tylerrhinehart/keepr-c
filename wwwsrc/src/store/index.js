@@ -26,5 +26,12 @@ function GetDataExample() {
   })
 }
 
-loginAndGetDataExample()
+function getAuth(){
+  api('account').then(res => {
+    console.log("Auth Response", res)
+  })
+}
+
+// loginAndGetDataExample()
+getAuth()
 
