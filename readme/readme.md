@@ -12,11 +12,11 @@ Vaults themselves are relatively simple... They only require a name and a descri
 
 For example I may really like game art and thus I would be a user who creates a vault named ***Sweet Game Art*** I will then start saving the `keeps` I like into this vault.
 
-The server you are using is a node server with Mongodb and Sessions. The user auth routes have already been created but you will be in charge of actually creating a user login/register form. 
+The server you are using is a dotnet server with SqlServer and Entity Framework Identity. The user auth routes have already been created but you will be in charge of actually creating a user login/register form. 
 
 ### Step 1 -  Where is the output? `Total Points: 10`
 
-To get started you are going to need to create some schemas and think about the necessary relationships. Draw these out before you start coding.
+To get started you are going to need to create some models and think about the necessary relationships. Draw these out before you start coding.
 
 The main goal here is to get users logging in and creating public posts (keeps). Once you are creating keeps you should be able to tackle the rest of the application.
 
