@@ -25,5 +25,5 @@ function GetDataExample() {
     console.error(err)
   })
 }
-
+loginAndGetDataExample()
 
