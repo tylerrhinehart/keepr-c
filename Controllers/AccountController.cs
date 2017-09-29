@@ -11,7 +11,6 @@ using Microsoft.AspNetCore.Cors;
 
 namespace keepr.Controllers
 {
-    [EnableCors("CorsPolicy")]
     [Route("api/[controller]")]
     public class AccountController : Controller
     {

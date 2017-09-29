@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace keepr.Controllers
 {
     [Authorize]
-    [EnableCors("CorsPolicy")]
     [Route("api/[controller]")]
     public class ValuesController : Controller
     {
