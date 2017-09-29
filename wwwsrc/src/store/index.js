@@ -2,7 +2,7 @@ import axios from 'axios'
 
 let api = axios.create({
   baseURL: 'http://localhost:5000/api/',
-  timeout: 2000,
+  timeout: 10000,
   withCredentials: true
 })
 
@@ -25,5 +25,6 @@ function GetDataExample() {
     console.error(err)
   })
 }
+
 loginAndGetDataExample()
 
