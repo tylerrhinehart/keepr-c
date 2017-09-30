@@ -1,6 +1,6 @@
 <template>
   <v-app light>
-    <v-navigation-drawer persistent :mini-variant="miniVariant" :clipped="clipped" :right="right" v-model="drawer" enable-resize-watcher>
+    <v-navigation-drawer temporary :mini-variant="miniVariant" :clipped="clipped" :right="right" v-model="drawer" enable-resize-watcher>
       <v-list>
         <v-list-tile v-for="(item, i) in items" :key="i" value="true" @click="item.function">
           <v-list-tile-action>
@@ -76,11 +76,13 @@
     <v-footer id="footer" :fixed="fixed">
       <span>Keepr &copy; 2017</span>
     </v-footer>
+    <BottomVaultsBar></BottomVaultsBar>
   </v-app>
 </template>
 
 <script>
   import router from "./router"
+  import BottomVaultsBar from './components/BottomVaultsBar'
   export default {
     name: 'app',
     data() {
@@ -175,6 +177,16 @@
       loggedIn() {
         return this.$store.state.loggedIn
       }
+    },
+    components: {
+      BottomVaultsBar
+    },
+    mounted() {
+      var _this = this
+      var elems = document.getElementsByClassName('add-keep')
+      $(elems).click(function(event) {
+        _this.$store.dispatch('showBottomVaultsBar')
+      })
     }
   }
 

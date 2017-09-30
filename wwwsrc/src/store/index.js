@@ -19,7 +19,8 @@ var store = new vuex.Store({
     user: {},
     loggedIn: false,
     userVaults: [
-      { title: 'Tigers', description: 'cool tiger keeps' }
+      { id: 1, title: 'Tigers', description: 'cool tiger keeps' },
+      { id: 2, title: 'Bears', description: 'cool bear keeps' }
     ],
     homeKeeps: [
       { id: 1, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
@@ -31,7 +32,8 @@ var store = new vuex.Store({
     ],
     activeVault: {},
     activeVaultKeeps: [],
-    activeKeep: {}
+    activeKeep: {},
+    showBottomVaultsBar: false
   },
 
   mutations: {
@@ -59,6 +61,12 @@ var store = new vuex.Store({
     },
     addToVault(state, payload) {
 
+    },
+    showBottomVaultsBar(state) {
+      state.showBottomVaultsBar = !state.showBottomVaultsBar
+    },
+    findVault(state, payload) {
+      state.activeVault = state.userVaults.find(v => v.id == payload)
     }
   },
 
@@ -97,14 +105,20 @@ var store = new vuex.Store({
     findKeep({ commit, dispatch }, payload) {
       commit('findKeep', payload)
     },
-    clearActiveKeep({commit, dispatch}) {
+    clearActiveKeep({ commit, dispatch }) {
       commit(clearActiveKeep)
     },
-    addKeep({commit, dispatch}, payload) {
+    addKeep({ commit, dispatch }, payload) {
       commit('addKeep', payload)
     },
-    addToVault({commit, dispatch}, payload) {
+    addToVault({ commit, dispatch }, payload) {
       commit('addToVault', payload)
+    },
+    showBottomVaultsBar({ commit, dispatch }) {
+      commit('showBottomVaultsBar')
+    },
+    findVault({ commit, dispatch }, payload) {
+      commit('findVault', payload)
     }
   }
 })

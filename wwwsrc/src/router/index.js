@@ -5,6 +5,7 @@ import UserVaults from '@/components/UserVaults'
 import Vault from '@/components/Vault'
 import Keep from '@/components/Keep'
 import SingleKeepView from '@/components/SingleKeepView'
+import SingleVaultView from '@/components/SingleVaultView'
 
 
 Vue.use(Router)
@@ -24,7 +25,7 @@ export default new Router({
     {
       path: '/vaults/:vaultId',
       name: 'Vault',
-      component: Vault
+      component: SingleVaultView
     },
     {
       path: '/keeps/:keepId',

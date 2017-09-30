@@ -1,11 +1,11 @@
 <template>
     <v-card>
-        <v-card-media :src="activeKeep.imgUrl" height="400px">
+        <v-card-media :src="activeVault.imgUrl" height="400px">
         </v-card-media>
         <v-card-title primary-title>
             <div>
-                <h3 class="headline mb-0">{{activeKeep.title}}</h3>
-                <div>{{activeKeep.description}}</div>
+                <h3 class="headline mb-0">{{activeVault.title}}</h3>
+                <div>{{activeVault.description}}</div>
             </div>
         </v-card-title>
         <v-card-actions>
@@ -17,23 +17,22 @@
 
 <script>
     export default {
-        name: 'SingleKeepView',
+        name: 'SingleVaultView',
         data() {
             return {
 
             }
         },
         computed: {
-            activeKeep() {
-                return this.$store.state.activeKeep
+            activeVault() {
+                return this.$store.state.activeVault
             }
         },
         mounted() {
-            this.$store.dispatch('findKeep', this.$route.params.keepId)
+            this.$store.dispatch('findVault', this.$route.params.vaultId)
         },
         // destroyed() {
         //     this.$store.dispatch('clearActiveKeep')
         // }
     }
-
 </script>
