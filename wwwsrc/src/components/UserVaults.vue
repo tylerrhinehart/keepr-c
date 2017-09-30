@@ -27,12 +27,7 @@
 							<v-flex xs12>
 								<v-text-field label="Description" v-model="description"></v-text-field>
 							</v-flex>
-							<!-- <v-flex xs12 sm6>
-								<v-select label="Age" required :items="['0-17', '18-29', '30-54', '54+']"></v-select>
-							</v-flex>
-							<v-flex xs12 sm6>
-								<v-select label="Interests" multiple autocomplete chips :items="['Skiing', 'Ice hockey', 'Soccer', 'Basketball', 'Hockey', 'Reading', 'Writing', 'Coding', 'Basejump']"></v-select>
-							</v-flex> -->
+							<v-switch label="Private" v-model="private"></v-switch>
 						</v-layout>
 					</v-container>
 					<small>*indicates required field</small>
@@ -56,19 +51,22 @@
 				fab: false,
 				dialog: false,
 				title: '',
-				description: ''
+				description: '',
+				private: false
 			}
 		},
 		methods: {
 			closeDialog() {
 				this.dialog = false,
 				this.title = '',
-				this.description = ''
+				this.description = '',
+				this.private = false
 			},
 			createVault() {
 				var newVault = {
 					title: this.title,
-					description: this.description
+					description: this.description,
+					private: this.private
 				}
 				this.$store.dispatch('addVault', newVault)
 				this.closeDialog()

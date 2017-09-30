@@ -4,6 +4,8 @@ import Home from '@/components/Home'
 import UserVaults from '@/components/UserVaults'
 import Vault from '@/components/Vault'
 import Keep from '@/components/Keep'
+import SingleKeepView from '@/components/SingleKeepView'
+
 
 Vue.use(Router)
 
@@ -26,8 +28,8 @@ export default new Router({
     },
     {
       path: '/keeps/:keepId',
-      name: 'Keep',
-      component: Keep
+      name: 'SingleKeepView',
+      component: SingleKeepView
     }
   ]
 })

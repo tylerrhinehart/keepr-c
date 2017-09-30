@@ -22,15 +22,16 @@ var store = new vuex.Store({
       { title: 'Tigers', description: 'cool tiger keeps' }
     ],
     homeKeeps: [
-      { title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      { title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
-      { title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      { title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
-      { title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      { title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' }
+      { id: 1, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      { id: 2, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
+      { id: 3, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      { id: 4, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
+      { id: 5, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      { id: 6, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' }
     ],
     activeVault: {},
-    activeVaultKeeps: []
+    activeVaultKeeps: [],
+    activeKeep: {}
   },
 
   mutations: {
@@ -45,6 +46,19 @@ var store = new vuex.Store({
     addVault(state, payload) {
       state.userVaults.push(payload)
       console.log(state.userVaults)
+    },
+    findKeep(state, payload) {
+      state.activeKeep = state.homeKeeps.find(k => k.id == payload)
+    },
+    clearActiveKeep(state) {
+      state.activeKeep = {}
+    },
+    addKeep(state, payload) {
+      console.log(payload)
+      state.homeKeeps.push(payload)
+    },
+    addToVault(state, payload) {
+
     }
   },
 
@@ -79,6 +93,18 @@ var store = new vuex.Store({
     },
     addVault({ commit, dispatch }, payload) {
       commit('addVault', payload)
+    },
+    findKeep({ commit, dispatch }, payload) {
+      commit('findKeep', payload)
+    },
+    clearActiveKeep({commit, dispatch}) {
+      commit(clearActiveKeep)
+    },
+    addKeep({commit, dispatch}, payload) {
+      commit('addKeep', payload)
+    },
+    addToVault({commit, dispatch}, payload) {
+      commit('addToVault', payload)
     }
   }
 })
