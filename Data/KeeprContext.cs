@@ -12,7 +12,7 @@ namespace keepr
         DbSet<Keep> Keeps { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=studentprojects.database.windows.net;Database=tylersKeeps;User ID=codeworks@studentprojects;Password=Applejuic3;Trusted_Connection=False;Encrypt=True");
+            optionsBuilder.UseSqlServer("Server=keeprdb.database.windows.net;Database=tylersKeeps;User ID=rhinehart22;Password=100%AppleJuice;Trusted_Connection=False;Encrypt=True");
         }
         public KeeprContext(DbContextOptions<KeeprContext> options) : base(options)
         {
@@ -21,3 +21,4 @@ namespace keepr
         }
     }
 }
+// "Server=studentprojects.database.windows.net;Database=tylersKeeps;User ID=codeworks@studentprojects;Password=Applejuic3;Trusted_Connection=False;Encrypt=True"

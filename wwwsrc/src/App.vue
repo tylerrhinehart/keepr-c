@@ -43,10 +43,10 @@
                 <v-flex v-show="authType == 'Sign Up'" xs12 sm6 md6>
                   <v-text-field label="Legal last name" required v-model="formInput.lastName"></v-text-field>
                 </v-flex>
-                <v-flex v-show="authType == 'Sign Up'" xs12>
+                <v-flex xs12>
                   <v-text-field label="Email" required v-model="formInput.email"></v-text-field>
                 </v-flex>
-                <v-flex xs12>
+                <v-flex v-show="authType == 'Sign Up'" xs12>
                   <v-text-field label="Username" required v-model="formInput.username"></v-text-field>
                 </v-flex>
                 <v-flex xs12>
@@ -122,7 +122,6 @@
       },
       logout() {
         this.$store.dispatch('logout')
-        router.push("/")
         this.drawer = false
       },
       form(authType) {
@@ -151,7 +150,7 @@
       },
       login() {
         var loginForm = {
-          username: this.formInput.username,
+          email: this.formInput.email,
           password: this.formInput.password
         }
         this.$store.dispatch('login', loginForm)
@@ -182,6 +181,8 @@
       BottomVaultsBar
     },
     mounted() {
+      this.$store.dispatch('getAuth')
+
       var _this = this
       var elems = document.getElementsByClassName('add-keep')
       $(elems).click(function(event) {

@@ -71,33 +71,38 @@ var store = new vuex.Store({
   },
 
   actions: {
-    // CreateAccountExample() {
-    //   api.post('account', { email: "j@j.com", password: 'Testing123!' }).then(GetDataExample)
-    // },
-    // loginAndGetDataExample() {
-    //   api.post('account/login', { email: "j@j.com", password: 'Testing123!' }).then(GetDataExample)
-    // },
     login({ commit, dispath }, payload) {
-      commit('login', payload)
+      api.post('account/login', payload).then((res) => {
+        commit('login', res)
+      })
+        .catch((err) => console.error(err))
     },
     signup({ commit, dispath }, payload) {
-      commit('login', payload)
+      api.post('account', payload).then((res) => {
+        commit('login', res)
+      })
+        .catch((err) => console.error(err))
     },
     logout({ commit, dispath }) {
-      // api.delete('account/logout')
-      commit('logout')
-    },
-    GetDataExample() {
-      api('values').then(d => {
-        console.log("Values Controller Data:", d)
-      }).catch(err => {
-        console.error(err)
+      api.delete('account/logout').then(() => {
+        commit('logout')
+        router.push('/')
       })
     },
-    getAuth() {
+    getAuth({ commit, dispatch }) {
       api('account').then(res => {
-        console.log("Auth Response", res)
+        if (!res.data.email) {
+          return router.push('/')
+        }
+        var user = {
+          id: res.data.id,
+          email: res.data.email,
+          userName: res.data.userName,
+          profileImgUrl: res.data.profileImgUrl
+        }
+        commit('login', user)
       })
+        .catch((err) => console.error(err))
     },
     addVault({ commit, dispatch }, payload) {
       commit('addVault', payload)
