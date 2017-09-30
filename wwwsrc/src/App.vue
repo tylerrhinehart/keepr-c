@@ -21,7 +21,7 @@
         <v-icon>menu</v-icon>
       </v-btn>
     </v-toolbar>
-    <main>
+    <main id="main">
       <router-view></router-view>
     </main>
     <v-layout row justify-center>
@@ -73,15 +73,10 @@
         </v-card>
       </v-dialog>
     </v-layout>
-    <v-footer :fixed="fixed">
+    <v-footer id="footer" :fixed="fixed">
       <span>Keepr &copy; 2017</span>
     </v-footer>
   </v-app>
-
-  <!-- <div id="app">
-    <img src="./assets/logo.jpg">
-    <router-view></router-view>
-  </div> -->
 </template>
 
 <script>
@@ -94,9 +89,10 @@
         drawer: false,
         fixed: true,
         items: [
-          { icon: 'bubble_chart', title: 'Home', function: this.home },
-          { icon: 'bubble_chart', title: 'My Account', function: this.account },
-          { icon: 'bubble_chart', title: 'Logout', function: this.logout }
+          { icon: 'home', title: 'Home', function: this.home },
+          { icon: 'account_circle', title: 'My Account', function: this.account },
+          { icon: 'web', title: 'My Vaults', function: this.myVaults },
+          { icon: 'remove_circle', title: 'Logout', function: this.logout }
         ],
         miniVariant: false,
         right: true,
@@ -170,6 +166,9 @@
         }
         this.$store.dispatch('signup', signupForm)
         this.closeDialog()
+      },
+      myVaults() {
+        router.push('/vaults')
       }
     },
     computed: {
@@ -188,6 +187,10 @@
     -moz-osx-font-smoothing: grayscale;
     text-align: center;
     color: #2c3e50;
-    margin-top: 60px;
+    margin-top: 2vh;
+  }
+
+  #main {
+    margin-bottom: 10vh;
   }
 </style>

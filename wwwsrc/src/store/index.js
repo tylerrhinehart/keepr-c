@@ -18,8 +18,19 @@ var store = new vuex.Store({
   state: {
     user: {},
     loggedIn: false,
-    userVaults: {},
-
+    userVaults: [
+      { title: 'Tigers', description: 'cool tiger keeps' }
+    ],
+    homeKeeps: [
+      { title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      { title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
+      { title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      { title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
+      { title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      { title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' }
+    ],
+    activeVault: {},
+    activeVaultKeeps: []
   },
 
   mutations: {
@@ -30,6 +41,10 @@ var store = new vuex.Store({
     logout(state) {
       state.user = {}
       state.loggedIn = false
+    },
+    addVault(state, payload) {
+      state.userVaults.push(payload)
+      console.log(state.userVaults)
     }
   },
 
@@ -40,13 +55,13 @@ var store = new vuex.Store({
     // loginAndGetDataExample() {
     //   api.post('account/login', { email: "j@j.com", password: 'Testing123!' }).then(GetDataExample)
     // },
-    login({commit, dispath}, payload) {
+    login({ commit, dispath }, payload) {
       commit('login', payload)
     },
-    signup({commit, dispath}, payload) {
+    signup({ commit, dispath }, payload) {
       commit('login', payload)
     },
-    logout({commit, dispath}) {
+    logout({ commit, dispath }) {
       // api.delete('account/logout')
       commit('logout')
     },
@@ -61,6 +76,9 @@ var store = new vuex.Store({
       api('account').then(res => {
         console.log("Auth Response", res)
       })
+    },
+    addVault({ commit, dispatch }, payload) {
+      commit('addVault', payload)
     }
   }
 })
