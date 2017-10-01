@@ -58,15 +58,15 @@
 		methods: {
 			closeDialog() {
 				this.dialog = false,
-				this.title = '',
-				this.description = '',
-				this.private = false
+					this.title = '',
+					this.description = '',
+					this.private = false
 			},
 			createVault() {
 				var newVault = {
 					title: this.title,
 					description: this.description,
-					private: this.private
+					// private: this.private
 				}
 				this.$store.dispatch('addVault', newVault)
 				this.closeDialog()
@@ -77,6 +77,12 @@
 				return this.$store.state.userVaults
 			}
 		},
+		beforeMount() {
+			this.$store.dispatch('getUserVaults')
+		},
+		// updated() {
+		// 	this.$store.dispatch('getUserVaults')
+		// },
 		components: {
 			Vault
 		}

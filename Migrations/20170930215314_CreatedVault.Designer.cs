@@ -11,9 +11,10 @@ using System;
 namespace keepr.Migrations
 {
     [DbContext(typeof(KeeprContext))]
-    partial class KeeprContextModelSnapshot : ModelSnapshot
+    [Migration("20170930215314_CreatedVault")]
+    partial class CreatedVault
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -116,7 +117,7 @@ namespace keepr.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Vaults");
+                    b.ToTable("Vault");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

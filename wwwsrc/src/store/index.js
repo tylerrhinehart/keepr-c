@@ -19,16 +19,16 @@ var store = new vuex.Store({
     user: {},
     loggedIn: false,
     userVaults: [
-      { id: 1, title: 'Tigers', description: 'cool tiger keeps' },
-      { id: 2, title: 'Bears', description: 'cool bear keeps' }
+      // { id: 1, title: 'Tigers', description: 'cool tiger keeps' },
+      // { id: 2, title: 'Bears', description: 'cool bear keeps' }
     ],
     homeKeeps: [
-      { id: 1, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      { id: 2, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
-      { id: 3, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      { id: 4, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
-      { id: 5, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
-      { id: 6, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' }
+      //   { id: 1, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      //   { id: 2, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
+      //   { id: 3, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      //   { id: 4, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' },
+      //   { id: 5, private: false, title: 'Tigers are cool!', description: 'Tigers live in Asia', imgUrl: 'https://static.pexels.com/photos/516541/pexels-photo-516541.jpeg' },
+      //   { id: 6, private: false, title: 'Mountains', description: 'Snowy mountains underneath a star-filled night sky', imgUrl: 'https://static.pexels.com/photos/291732/pexels-photo-291732.jpeg' }
     ],
     activeVault: {},
     activeVaultKeeps: [],
@@ -56,7 +56,6 @@ var store = new vuex.Store({
       state.activeKeep = {}
     },
     addKeep(state, payload) {
-      console.log(payload)
       state.homeKeeps.push(payload)
     },
     addToVault(state, payload) {
@@ -67,6 +66,12 @@ var store = new vuex.Store({
     },
     findVault(state, payload) {
       state.activeVault = state.userVaults.find(v => v.id == payload)
+    },
+    updateKeeps(state, payload) {
+      state.homeKeeps = payload
+    },
+    updateVaults(state, payload) {
+      state.userVaults = payload
     }
   },
 
@@ -105,7 +110,12 @@ var store = new vuex.Store({
         .catch((err) => console.error(err))
     },
     addVault({ commit, dispatch }, payload) {
-      commit('addVault', payload)
+      payload.userId = this.state.user.id
+      payload.vaultKeeps = []
+      api.post('vaults', payload).then((res) => {
+        // commit('addVault', res)
+        dispatch('getUserVaults')
+      })
     },
     findKeep({ commit, dispatch }, payload) {
       commit('findKeep', payload)
@@ -114,7 +124,11 @@ var store = new vuex.Store({
       commit(clearActiveKeep)
     },
     addKeep({ commit, dispatch }, payload) {
-      commit('addKeep', payload)
+      payload.userId = this.state.user.id
+      api.post('keeps', payload).then((res) => {
+        // commit('addKeep', payload)
+        dispatch('getKeeps')
+      })
     },
     addToVault({ commit, dispatch }, payload) {
       commit('addToVault', payload)
@@ -124,6 +138,16 @@ var store = new vuex.Store({
     },
     findVault({ commit, dispatch }, payload) {
       commit('findVault', payload)
+    },
+    getKeeps({ commit, dispatch }) {
+      api('keeps').then((res) => {
+        commit('updateKeeps', res.data)
+      })
+    },
+    getUserVaults({ commit, dispatch }) {
+      api('vaults/' + this.state.user.id + '/uservaults').then((res) => {
+        commit('updateVaults', res.data)
+      })
     }
   }
 })

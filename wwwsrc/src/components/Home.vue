@@ -83,6 +83,9 @@
         return this.$store.state.homeKeeps
       }
     },
+    mounted() {
+      this.$store.dispatch('getKeeps')
+    },
     components: {
       Keep
     }
