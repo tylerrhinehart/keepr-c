@@ -29,9 +29,10 @@
             },
             addToVault(vaultId) {
                 var keepToAdd = {
-                    keepId: this.keep.id,
+                    keepId: null,
                     vaultId: vaultId
                 }
+                // console.log(keepToAdd)
                 this.sheet = false
                 this.$store.dispatch('addToVault', keepToAdd)
             }

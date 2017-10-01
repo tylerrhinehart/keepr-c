@@ -34,6 +34,7 @@
             }
         },
         mounted() {
+            this.$store.dispatch('selectKeep', this.activeKeep.id)
             this.$store.dispatch('findKeep', this.$route.params.keepId)
         },
         // destroyed() {

@@ -29,6 +29,7 @@
         },
         methods: {
             singleView() {
+                this.$store.dispatch('setActiveVault', this.vault)
                 router.push('/vaults/' + this.vault.id)
             }
         }

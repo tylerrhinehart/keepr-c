@@ -33,7 +33,8 @@ var store = new vuex.Store({
     activeVault: {},
     activeVaultKeeps: [],
     activeKeep: {},
-    showBottomVaultsBar: false
+    showBottomVaultsBar: false,
+    selectedKeep: ''
   },
 
   mutations: {
@@ -71,6 +72,12 @@ var store = new vuex.Store({
     },
     updateVaults(state, payload) {
       state.userVaults = payload
+    },
+    selectKeep(state, payload) {
+      state.selectedKeep = payload
+    },
+    setActiveVault(state, payload) {
+      state.activeVault = payload
     }
   },
 
@@ -136,13 +143,20 @@ var store = new vuex.Store({
       })
     },
     addToVault({ commit, dispatch }, payload) {
-      commit('addToVault', payload)
+      payload.keepId = this.state.selectedKeep
+      api.post('vaults/' + payload.vaultId + '/addkeep/' + this.state.selectedKeep).then((res) => {
+        console.log(res)
+        // commit('addToVault', payload)
+      })
     },
     showBottomVaultsBar({ commit, dispatch }) {
       commit('showBottomVaultsBar')
     },
-    findVault({ commit, dispatch }, payload) {
-      commit('findVault', payload)
+    getVaultKeeps({ commit, dispatch }, payload) {
+      api('vaults/' + this.state.user.id + '/uservaults/' + payload).then((res) => {
+        console.log(res)
+        // commit('findVault', payload)
+      })
     },
     getKeeps({ commit, dispatch }) {
       api('keeps').then((res) => {
@@ -153,6 +167,12 @@ var store = new vuex.Store({
       api('vaults/' + this.state.user.id + '/uservaults').then((res) => {
         commit('updateVaults', res.data)
       })
+    },
+    selectKeep({ commit, dispatch }, payload) {
+      commit('selectKeep', payload)
+    },
+    setActiveVault({commit, dispatch}, payload) {
+      commit('setActiveVault', payload)
     }
   }
 })

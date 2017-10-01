@@ -34,6 +34,12 @@ namespace keepr.Controllers
             return _db.Vaults.Where(v => v.UserId == userId);
         }
 
+        [HttpGet("{userId}/uservaults/{vaultId}")]
+        public IEnumerable<Keep> GetVaultKeeps(string userId, int vaultId)
+        {
+            return _db.Vaults.Single(v => v.Id == vaultId).VaultKeeps;
+        }
+
         // POST api/values
         [HttpPost]
         public string Post([FromBody]Vault vault)
@@ -41,6 +47,24 @@ namespace keepr.Controllers
             _db.Vaults.Add(vault);
             _db.SaveChanges();
             return "Vault Created";
+        }
+
+        // Add keep to vault
+        [HttpPost("{vaultId}/addkeep/{keepId}")]
+        public IEnumerable<Keep> AddKeep(int vaultId, int keepId)
+        {
+            // var keep = _db.Keeps.Single(k => k.Id == keepId);
+            // var vault = _db.Vaults.Single(v => v.Id == vaultId);
+            var keep = _db.Keeps.Find(keepId);
+            var vault = _db.Vaults.Find(vaultId);
+            if (keep != null && vault != null)
+            {
+                // _db.Vaults.Find(vault).VaultKeeps.Add(keep);
+                vault.VaultKeeps.Add(keep);
+                _db.SaveChanges();
+                return vault.VaultKeeps;
+            }
+            return vault.VaultKeeps;
         }
 
         // PUT api/values/5

@@ -29,7 +29,7 @@
             }
         },
         mounted() {
-            this.$store.dispatch('findVault', this.$route.params.vaultId)
+            this.$store.dispatch('getVaultKeeps', this.$route.params.vaultId)
         },
         // destroyed() {
         //     this.$store.dispatch('clearActiveKeep')
