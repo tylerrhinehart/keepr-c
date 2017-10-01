@@ -182,12 +182,6 @@
     },
     mounted() {
       this.$store.dispatch('getAuth')
-
-      var _this = this
-      var elems = document.getElementsByClassName('add-keep')
-      $(elems).click(function(event) {
-        _this.$store.dispatch('showBottomVaultsBar')
-      })
     }
   }
 

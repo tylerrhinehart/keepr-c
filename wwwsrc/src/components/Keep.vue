@@ -33,6 +33,7 @@
 				router.push('/keeps/' + keep.id)
 			},
 			selectKeep() {
+				this.$store.dispatch('showBottomVaultsBar')
 			}
 		}
 	}

@@ -47,7 +47,6 @@ var store = new vuex.Store({
     },
     addVault(state, payload) {
       state.userVaults.push(payload)
-      console.log(state.userVaults)
     },
     findKeep(state, payload) {
       state.activeKeep = state.homeKeeps.find(k => k.id == payload)
@@ -76,19 +75,22 @@ var store = new vuex.Store({
   },
 
   actions: {
-    login({ commit, dispath }, payload) {
+    login({ commit, dispatch }, payload) {
       api.post('account/login', payload).then((res) => {
-        commit('login', res)
+        commit('login', res.data)
       })
+        .then(() => {
+          dispatch('getUserVaults')
+        })
         .catch((err) => console.error(err))
     },
     signup({ commit, dispath }, payload) {
       api.post('account', payload).then((res) => {
-        commit('login', res)
+        commit('login', res.data)
       })
         .catch((err) => console.error(err))
     },
-    logout({ commit, dispath }) {
+    logout({ commit, dispatch }) {
       api.delete('account/logout').then(() => {
         commit('logout')
         router.push('/')
@@ -107,6 +109,9 @@ var store = new vuex.Store({
         }
         commit('login', user)
       })
+        .then(() => {
+          dispatch('getUserVaults')
+        })
         .catch((err) => console.error(err))
     },
     addVault({ commit, dispatch }, payload) {

@@ -78,11 +78,8 @@
 			}
 		},
 		beforeMount() {
-			this.$store.dispatch('getUserVaults')
+			// this.$store.dispatch('getUserVaults')
 		},
-		// updated() {
-		// 	this.$store.dispatch('getUserVaults')
-		// },
 		components: {
 			Vault
 		}

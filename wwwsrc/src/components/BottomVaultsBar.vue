@@ -48,6 +48,14 @@
             showBottomVaultsBar() {
                 return this.$store.state.showBottomVaultsBar
             }
+        },
+        created() {
+            // var _this = this
+            // var elems = document.getElementsByClassName('add-keep')
+            // $(elems).click(function (event) {
+            //     console.log('clicked')
+            //     _this.$store.dispatch('showBottomVaultsBar')
+            // })
         }
     }
 

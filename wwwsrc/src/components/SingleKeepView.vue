@@ -10,7 +10,7 @@
         </v-card-title>
         <v-card-actions>
             <v-btn flat class="orange--text">Share</v-btn>
-            <v-btn flat class="orange--text add-keep">Keep</v-btn>
+            <v-btn flat class="orange--text add-keep" @click="selectKeep">Keep</v-btn>
         </v-card-actions>
     </v-card>
 </template>
@@ -21,6 +21,11 @@
         data() {
             return {
 
+            }
+        },
+        methods: {
+            selectKeep() {
+                this.$store.dispatch('showBottomVaultsBar')
             }
         },
         computed: {
