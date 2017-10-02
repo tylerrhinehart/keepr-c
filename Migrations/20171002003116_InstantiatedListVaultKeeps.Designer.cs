@@ -11,8 +11,8 @@ using System;
 namespace keepr.Migrations
 {
     [DbContext(typeof(KeeprContext))]
-    [Migration("20170929081839_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20171002003116_InstantiatedListVaultKeeps")]
+    partial class InstantiatedListVaultKeeps
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,9 +35,13 @@ namespace keepr.Migrations
                     b.Property<string>("UserId")
                         .IsRequired();
 
+                    b.Property<int?>("VaultId");
+
                     b.HasKey("Id");
 
                     b.HasIndex("UserId");
+
+                    b.HasIndex("VaultId");
 
                     b.ToTable("Keeps");
                 });
@@ -93,6 +97,27 @@ namespace keepr.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("keepr.Models.Vault", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ImgUrl");
+
+                    b.Property<string>("Title");
+
+                    b.Property<string>("UserId")
+                        .IsRequired();
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("Vaults");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -207,6 +232,18 @@ namespace keepr.Migrations
                 {
                     b.HasOne("keepr.Models.User")
                         .WithMany("MyKeeps")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("keepr.Models.Vault")
+                        .WithMany("VaultKeeps")
+                        .HasForeignKey("VaultId");
+                });
+
+            modelBuilder.Entity("keepr.Models.Vault", b =>
+                {
+                    b.HasOne("keepr.Models.User")
+                        .WithMany("UserVaults")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });

@@ -156,7 +156,7 @@ namespace keepr.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Keeps",
+                name: "Vaults",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -168,6 +168,29 @@ namespace keepr.Migrations
                 },
                 constraints: table =>
                 {
+                    table.PrimaryKey("PK_Vaults", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Vaults_AspNetUsers_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Keeps",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ImgUrl = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    UserId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    VaultId = table.Column<int>(type: "int", nullable: true)
+                },
+                constraints: table =>
+                {
                     table.PrimaryKey("PK_Keeps", x => x.Id);
                     table.ForeignKey(
                         name: "FK_Keeps_AspNetUsers_UserId",
@@ -175,6 +198,12 @@ namespace keepr.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Keeps_Vaults_VaultId",
+                        column: x => x.VaultId,
+                        principalTable: "Vaults",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -220,6 +249,16 @@ namespace keepr.Migrations
                 name: "IX_Keeps_UserId",
                 table: "Keeps",
                 column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Keeps_VaultId",
+                table: "Keeps",
+                column: "VaultId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Vaults_UserId",
+                table: "Vaults",
+                column: "UserId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -244,6 +283,9 @@ namespace keepr.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "Vaults");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

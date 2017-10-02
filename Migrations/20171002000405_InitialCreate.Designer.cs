@@ -11,8 +11,8 @@ using System;
 namespace keepr.Migrations
 {
     [DbContext(typeof(KeeprContext))]
-    [Migration("20171001010118_AddVaults")]
-    partial class AddVaults
+    [Migration("20171002000405_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

@@ -37,7 +37,8 @@ namespace keepr.Controllers
         [HttpGet("{userId}/uservaults/{vaultId}")]
         public IEnumerable<Keep> GetVaultKeeps(string userId, int vaultId)
         {
-            return _db.Vaults.Single(v => v.Id == vaultId).VaultKeeps;
+            // return _db.Vaults.Single(v => v.Id == vaultId).VaultKeeps;
+            return _db.Vaults.Find(vaultId).VaultKeeps;
         }
 
         // POST api/values
@@ -60,11 +61,11 @@ namespace keepr.Controllers
             if (keep != null && vault != null)
             {
                 // _db.Vaults.Find(vault).VaultKeeps.Add(keep);
-                vault.VaultKeeps.Add(keep);
+                vault.VaultKeeps.Add(_db.Keeps.Find(keepId));
                 _db.SaveChanges();
-                return vault.VaultKeeps;
+                return _db.Vaults.Single(v => v.Id == vaultId).VaultKeeps;
             }
-            return vault.VaultKeeps;
+            return _db.Vaults.Single(v => v.Id == vaultId).VaultKeeps;
         }
 
         // PUT api/values/5
